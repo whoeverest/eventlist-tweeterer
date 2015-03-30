@@ -9,8 +9,8 @@ import os
 import config
 
 current_dir = os.path.dirname(os.path.realpath(__file__))
-data_path = os.path.join(current_dir, './data')
-old_events_path = os.path.join(current_dir, './data/old.json')
+data_path = os.path.join(current_dir, 'data')
+old_events_path = os.path.join(current_dir, 'data/old.json')
 
 if not os.path.isdir(data_path):
     os.makedirs(data_path)
