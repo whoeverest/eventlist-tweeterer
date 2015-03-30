@@ -44,8 +44,6 @@ if len(to_tweet) == 0:
     print 'No new events, exiting'
 
 for event in to_tweet:
-    print event
-
     name = event['name']
     link = 'https://facebook.com/' + event['id']
 
