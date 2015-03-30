@@ -1,0 +1,6 @@
+# Copy this file, rename it to 'config.py' and add your credentials
+
+CONSUMER_KEY = "<YOUR CONSUMER_KEY>"
+CONSUMER_KEY_SECRET = "<YOUR CONSUMER SECRET>"
+ACCESS_TOKEN = "<YOUR ACCESS TOKEN>"
+ACCESS_TOKEN_SECRET = "<YOUR ACCESS TOKEN SECRET>"
