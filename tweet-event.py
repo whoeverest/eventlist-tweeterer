@@ -36,18 +36,17 @@ for event in new_events:
         print 'adding event'
         to_tweet.append(event)
 
-if False:
-    for event in to_tweet:
-        print event
 
-        name = event['name']
-        link = 'https://facebook.com/' + event['id']
+for event in to_tweet:
+    print event
 
-        if len(name) > 100:
-            name = name[:97] + '...'
-        
-        api.PostUpdate('TST ' + name + ' ' + link)
+    name = event['name']
+    link = 'https://facebook.com/' + event['id']
 
-        break
+    if len(name) > 100:
+        name = name[:97] + '...'
+    
+    api.PostUpdate(name + ' ' + link)
+
 
 open('./data/old.json', 'w').write(json.dumps(new_events))
