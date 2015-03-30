@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 import twitter
 import requests
 import json
@@ -6,8 +8,12 @@ import os
 # local
 import config
 
-if not os.path.isdir('./data'):
-    os.makedirs('./data')
+current_dir = os.path.dirname(os.path.realpath(__file__))
+data_path = os.path.join(current_dir, './data')
+old_events_path = os.path.join(current_dir, './data/old.json')
+
+if not os.path.isdir(data_path):
+    os.makedirs(data_path)
 
 response = requests.get('http://eventlist.mk/events')
 
@@ -22,10 +28,8 @@ api = twitter.Api(
     access_token_secret=config.ACCESS_TOKEN_SECRET
 )
 
-old_events = json.loads(open('./data/old.json', 'r').read())
+old_events = json.loads(open(old_events_path, 'r').read())
 old_event_ids = map(lambda ev: ev['id'], old_events)
-
-print old_event_ids
 
 new_events = json.loads(response.content)
 
@@ -33,9 +37,11 @@ to_tweet = []
 
 for event in new_events:
     if event['id'] not in old_event_ids:
-        print 'adding event'
+        print 'added event with id', event['id']
         to_tweet.append(event)
 
+if len(to_tweet) == 0:
+    print 'No new events, exiting'
 
 for event in to_tweet:
     print event
@@ -49,4 +55,4 @@ for event in to_tweet:
     api.PostUpdate(name + ' ' + link)
 
 
-open('./data/old.json', 'w').write(json.dumps(new_events))
+open(old_events_path, 'w').write(json.dumps(new_events))
