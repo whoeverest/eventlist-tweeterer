@@ -53,8 +53,17 @@ for event in to_tweet:
 
     if len(name) > 100:
         name = name[:97] + '...'
-    
-    api.PostUpdate(name + ' ' + link)
+
+    tweet_text = name + ' ' + link
+
+    tweet_image = None
+    if event['cover']:
+        tweet_image = event['cover']['source']
+
+    if tweet_image:
+        api.PostMedia(tweet_text, tweet_image)
+    else:
+        api.PostUpdate(tweet_text)
 
 
 open(old_events_path, 'w').write(json.dumps(new_events))
