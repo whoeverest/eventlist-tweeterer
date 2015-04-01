@@ -3,10 +3,14 @@
 import twitter
 import requests
 import json
+import datetime
 import os
 
 # local
 import config
+
+def log(message):
+    print datetime.datetime.now().isoformat() + ': ' + message
 
 current_dir = os.path.dirname(os.path.realpath(__file__))
 data_path = os.path.join(current_dir, 'data')
@@ -18,7 +22,7 @@ if not os.path.isdir(data_path):
 response = requests.get('http://eventlist.mk/events')
 
 if response.status_code != 200:
-    print "Something bad happened. :/"
+    log("Something bad happened. :/")
     exit(1)
 
 api = twitter.Api(
@@ -37,11 +41,11 @@ to_tweet = []
 
 for event in new_events:
     if event['id'] not in old_event_ids:
-        print 'added event with id', event['id']
+        log('added event with id ' + event['id'])
         to_tweet.append(event)
 
 if len(to_tweet) == 0:
-    print 'No new events, exiting'
+    log('No new events, exiting')
 
 for event in to_tweet:
     name = event['name']
