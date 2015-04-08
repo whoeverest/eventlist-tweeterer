@@ -66,4 +66,5 @@ for event in to_tweet:
         api.PostUpdate(tweet_text)
 
 
-open(old_events_path, 'w').write(json.dumps(new_events))
+with open(old_events_path, 'w') as f:
+    f.write(json.dumps(new_events))
