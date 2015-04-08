@@ -6,6 +6,7 @@ import json
 import datetime
 import os
 import sys
+import traceback
 
 # local
 import config
@@ -67,7 +68,7 @@ for event in to_tweet:
         else:
             api.PostUpdate(tweet_text)
     except Exception as e:
-        print('Exception: ' + e.message)
+        traceback.print_exc()
 
 with open(old_events_path, 'w') as f:
     f.write(json.dumps(new_events))
