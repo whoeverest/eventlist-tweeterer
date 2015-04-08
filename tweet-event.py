@@ -5,6 +5,7 @@ import requests
 import json
 import datetime
 import os
+import sys
 
 # local
 import config
@@ -51,8 +52,8 @@ for event in to_tweet:
     name = event['name']
     link = 'https://facebook.com/' + event['id']
 
-    if len(name) > 100:
-        name = name[:97] + '...'
+    if len(name) > 90:
+        name = name[:87] + '...'
 
     tweet_text = name + ' ' + link
 
@@ -60,11 +61,13 @@ for event in to_tweet:
     if event['cover']:
         tweet_image = event['cover']['source']
 
-    if tweet_image:
-        api.PostMedia(tweet_text, tweet_image)
-    else:
-        api.PostUpdate(tweet_text)
-
+    try:
+        if tweet_image:
+            api.PostMedia(tweet_text, tweet_image)
+        else:
+            api.PostUpdate(tweet_text)
+    except Exception as e:
+        print('Exception: ' + e.message)
 
 with open(old_events_path, 'w') as f:
     f.write(json.dumps(new_events))
