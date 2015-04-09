@@ -59,7 +59,7 @@ for event in to_tweet:
     tweet_text = name + ' ' + link
 
     tweet_image = None
-    if event['cover']:
+    if 'cover' in event:
         tweet_image = event['cover']['source']
 
     try:
